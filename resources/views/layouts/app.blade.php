@@ -3,8 +3,10 @@
 @section('body')
 <div class="h-screen flex overflow-hidden bg-gray-100">
     <!-- Off-canvas menu for mobile -->
+    <div>
     <div class="md:hidden">
-        <div class="fixed inset-0 flex z-40">
+        <div x-data="{ open: false }"
+        class="z-40">
             <!--
               Off-canvas menu overlay, show/hide based on off-canvas menu state.
 
@@ -15,8 +17,12 @@
                 From: "opacity-100"
                 To: "opacity-0"
             -->
-            <div class="fixed inset-0">
-                <div class="absolute inset-0 bg-gray-600 opacity-75"></div>
+            <div
+           
+            class="fixed inset-0">
+                <div 
+                @click="open = true"
+                class="absolute inset-0 opacity-75"></div>
             </div>
             <!--
               Off-canvas menu, show/hide based on off-canvas menu state.
@@ -28,9 +34,17 @@
                 From: "translate-x-0"
                 To: "-translate-x-full"
             -->
-            <div class="relative flex-1 flex flex-col max-w-xs w-full bg-gray-800">
-                <div class="absolute top-0 right-0 -mr-14 p-1">
+            <div 
+            x-show="open"
+            x-cloak
+            @click.away="open = false"
+            class="relative flex-1 flex flex-col max-w-xs w-full bg-gray-800">
+                <div 
+          
+                class="absolute top-0 right-0 -mr-14 p-1">
                     <button
+                        @click="open = false"
+                        type="button"
                         class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
                         aria-label="Close sidebar">
                         <svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -65,6 +79,16 @@
                             </svg>
                             Team
                         </a>
+                        <a href="/logout"
+                       class="mt-1 group flex items-center px-2 py-2 text-sm leading-5 font-medium text-gray-300 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition ease-in-out duration-150">
+                        <svg
+                            class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-300 group-focus:text-gray-300 transition ease-in-out duration-150"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                        </svg>
+                        Logout
+                    </a>
                     </nav>
                 </div>
                 <div class="flex-shrink-0 flex bg-gray-700 p-4">
@@ -91,6 +115,7 @@
                 <!-- Force sidebar to shrink to fit close icon -->
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Static sidebar for desktop -->
@@ -157,6 +182,8 @@
     <div class="flex flex-col w-0 flex-1 overflow-hidden">
         <div class="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
             <button
+            x-show="true"
+            @click.away="open = true"
                 class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150"
                 aria-label="Open sidebar">
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
